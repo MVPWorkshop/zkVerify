@@ -7662,13 +7662,13 @@ dependencies = [
 [[package]]
 name = "nova-verifier"
 version = "0.1.0"
-source = "git+https://github.com/MVPWorkshop/nova-verifier.git#429f7be791428d508e0b59f6c355c27707a20366"
+source = "git+https://github.com/MVPWorkshop/nova-verifier.git#ef381b1eceda43695348861934a9503dfb10acc6"
 dependencies = [
  "ff",
  "nova-snark",
  "pasta_curves",
  "postcard",
- "thiserror 1.0.69",
+ "thiserror 2.0.9",
 ]
 
 [[package]]

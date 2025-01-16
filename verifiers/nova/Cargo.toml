@@ -27,7 +27,7 @@ sp-core = { workspace = true }
 sp-runtime = { workspace = true, optional = true }
 sp-io = { workspace = true, optional = true }
 
-nova-verifier = { git = "https://github.com/MVPWorkshop/nova-verifier.git" }
+nova-verifier = { git = "https://github.com/MVPWorkshop/nova-verifier.git", default-features = false }
 
 [dev-dependencies]
 hex-literal = { version = "0.4.1" }
