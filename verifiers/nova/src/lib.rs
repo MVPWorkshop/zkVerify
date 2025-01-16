@@ -1,6 +1,6 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use core::{hash::Hash, marker::PhantomData};
+use core::marker::PhantomData;
 use frame_support::weights::Weight;
 use hp_verifiers::Verifier;
 use sp_core::*;
