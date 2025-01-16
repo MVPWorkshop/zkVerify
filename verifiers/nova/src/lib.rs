@@ -3,7 +3,6 @@
 use core::{hash::Hash, marker::PhantomData};
 use frame_support::weights::Weight;
 use hp_verifiers::Verifier;
-use nova_verifier::verifier::verify;
 use sp_core::*;
 
 pub mod benchmarking;
