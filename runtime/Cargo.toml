@@ -38,7 +38,7 @@ pallet-referenda = { workspace = true }
 pallet-utility = { workspace = true }
 pallet-vesting = { workspace = true }
 ismp = { workspace = true }
-pallet-ismp = { workspace = true, features = [ "unsigned" ]}
+pallet-ismp = { workspace = true, features = ["unsigned"] }
 pallet-ismp-runtime-api = { workspace = true }
 ismp-grandpa = { workspace = true }
 frame-metadata-hash-extension = { workspace = true }
@@ -101,6 +101,8 @@ pallet-groth16-verifier = { workspace = true }
 pallet-risc0-verifier = { workspace = true }
 pallet-ultraplonk-verifier = { workspace = true }
 pallet-proofofsql-verifier = { workspace = true }
+pallet-nova-verifier = { workspace = true }
+
 
 authority-discovery-primitives = { workspace = true, optional = true }
 
@@ -161,6 +163,7 @@ runtime-benchmarks = [
 	"pallet-risc0-verifier/runtime-benchmarks",
 	"pallet-ultraplonk-verifier/runtime-benchmarks",
 	"pallet-proofofsql-verifier/runtime-benchmarks",
+	"pallet-nova-verifier/runtime-benchmarks",
 	"polkadot-primitives?/runtime-benchmarks",
 	"polkadot-runtime-parachains?/runtime-benchmarks",
 	"polkadot-runtime-common?/runtime-benchmarks",
@@ -184,7 +187,7 @@ relay = [
 ]
 default = ["std"]
 std = [
-    "anyhow/std",
+	"anyhow/std",
 	"codec/std",
 	"finality-grandpa/std",
 	"frame-benchmarking?/std",
@@ -261,6 +264,7 @@ std = [
 	"pallet-risc0-verifier/std",
 	"pallet-ultraplonk-verifier/std",
 	"pallet-proofofsql-verifier/std",
+	"pallet-nova-verifier/std",
 	"hp-verifiers/std",
 	"substrate-wasm-builder",
 	"polkadot-primitives?/std",

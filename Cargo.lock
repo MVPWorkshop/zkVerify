@@ -17931,6 +17931,7 @@ dependencies = [
  "pallet-ismp-runtime-api",
  "pallet-message-queue",
  "pallet-multisig",
+ "pallet-nova-verifier",
  "pallet-offences",
  "pallet-poe",
  "pallet-preimage",
