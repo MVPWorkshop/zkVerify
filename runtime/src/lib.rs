@@ -982,6 +982,21 @@ impl pallet_verifiers::Config<pallet_proofofsql_verifier::ProofOfSql<Runtime>> f
 }
 
 parameter_types! {
+    pub const NovaSomeParameter: u8 = 1; // arbitrary value
+}
+
+impl pallet_nova_verifier::Config for Runtime {
+    type SomeParameter = NovaSomeParameter;
+}
+
+impl pallet_verifiers::Config<pallet_nova_verifier::Nova<Runtime>> for Runtime {
+    type RuntimeEvent = RuntimeEvent;
+    type OnProofVerified = Poe;
+    type WeightInfo =
+        pallet_nova_verifier::NovaWeight<weights::pallet_nova_verifier::ZKVWeight<Runtime>>;
+}
+
+parameter_types! {
     pub const Coprocessor: Option<StateMachine> = Some(StateMachine::Kusama(4009));
     pub const HostStateMachine: StateMachine = StateMachine::Substrate(*b"zkv_");
 }
@@ -1065,6 +1080,7 @@ construct_runtime!(
         Proxy: pallet_proxy,
         CommonVerifiers: pallet_verifiers::common,
         SettlementProofOfSqlPallet: pallet_proofofsql_verifier,
+        SettlementNovaPallet : pallet_nova_verifier,
         Aggregate: pallet_aggregate,
         Ismp: pallet_ismp,
         IsmpGrandpa: ismp_grandpa,
@@ -1251,6 +1267,7 @@ mod benches {
         [pallet_risc0_verifier, Risc0VerifierBench::<Runtime>]
         [pallet_ultraplonk_verifier, UltraplonkVerifierBench::<Runtime>]
         [pallet_proofofsql_verifier, ProofOfSqlVerifierBench::<Runtime>]
+        [pallet_nova_verifier, NovaVerifierBench::<Runtime>]
     );
 }
 
@@ -1795,6 +1812,7 @@ impl_runtime_apis! {
             use pallet_risc0_verifier::benchmarking::Pallet as Risc0VerifierBench;
             use pallet_ultraplonk_verifier::benchmarking::Pallet as UltraplonkVerifierBench;
             use pallet_proofofsql_verifier::benchmarking::Pallet as ProofOfSqlVerifierBench;
+            use pallet_nova_verifier::benchmarking::Pallet as NovaVerifierBench;
 
             #[cfg(feature = "relay")]
             pub mod xcm {
@@ -1826,6 +1844,7 @@ impl_runtime_apis! {
             use pallet_risc0_verifier::benchmarking::Pallet as Risc0VerifierBench;
             use pallet_ultraplonk_verifier::benchmarking::Pallet as UltraplonkVerifierBench;
             use pallet_proofofsql_verifier::benchmarking::Pallet as ProofOfSqlVerifierBench;
+            use pallet_nova_verifier::benchmarking::Pallet as NovaVerifierBench;
 
             #[cfg(feature = "relay")]
             pub mod xcm {
