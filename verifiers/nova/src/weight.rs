@@ -34,9 +34,6 @@ impl WeightInfo for () {
     fn unregister_vk() -> Weight{
         Weight::from_parts(98_763_000, 30445)
         .saturating_add(RocksDbWeight::get().reads(3_u64))
-        .saturating_add(RocksDbWeight::get().writes(3_u64))
-
-
-        
+        .saturating_add(RocksDbWeight::get().writes(3_u64))        
     }
 }
