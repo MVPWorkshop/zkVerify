@@ -44,7 +44,7 @@ impl<T: Config> Verifier for Nova<T> {
     fn verify_proof(
         vk: &Self::Vk,
         proof: &Self::Proof,
-        pubs: &Self::Pubs,
+        _pubs: &Self::Pubs,
     ) -> Result<(), hp_verifiers::VerifyError> {
         log::trace!("Verifying proof");
 

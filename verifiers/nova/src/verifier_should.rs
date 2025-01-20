@@ -12,26 +12,24 @@ impl Config for Mock {
 
 include!("resources.rs");
 
-// #[test]
-// fn verify_valid_proof() {
-//     assert!(Foo::<Mock>::verify_proof(&VALID_VK, &VALID_PROOF, &VALID_PUBS).is_ok());
-// }
+#[test]
+fn verify_valid_proof() {
+    assert!(Nova::<Mock>::verify_proof(&VALID_VK, &VALID_PROOF.to_vec(), &[0; 32]).is_ok());
+}
 
-// mod reject {
-//     use hp_verifiers::VerifyError;
+mod reject {
+    use hp_verifiers::VerifyError;
 
-//     use super::*;
+    use super::*;
 
-//     #[test]
-//     fn invalid_proof() {
-//         let mut invalid_pubs = VALID_PUBS.clone();
-//         invalid_pubs[0] = SOME_PARAMETER_CONST
-//             .saturating_sub(VALID_VK[0])
-//             .saturating_sub(VALID_PROOF[0]);
+    #[test]
+    fn invalid_proof() {
+        let mut invalid_proof = VALID_PROOF.clone();
+        invalid_proof[0] = SOME_PARAMETER_CONST.saturating_sub(VALID_VK[0]);
 
-//         assert_eq!(
-//             Foo::<Mock>::verify_proof(&VALID_VK, &VALID_PROOF, &invalid_pubs),
-//             Err(VerifyError::VerifyError)
-//         )
-//     }
-// }
+        assert_eq!(
+            Nova::<Mock>::verify_proof(&VALID_VK, &invalid_proof.to_vec(), &[0; 32]),
+            Err(VerifyError::InvalidProofData)
+        )
+    }
+}
