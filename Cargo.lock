@@ -7634,7 +7634,7 @@ checksum = "61807f77802ff30975e01f4f071c8ba10c022052f98b3294119f3e615d13e5be"
 [[package]]
 name = "nova-snark"
 version = "0.38.0"
-source = "git+https://github.com/MVPWorkshop/Nova?branch=no_std#c5b8b35b5185e3af3e6d98a926379823015a6ea2"
+source = "git+https://github.com/MVPWorkshop/Nova?branch=no_std#d3eb545827b755d7e4c1811df8c9b10c043063ac"
 dependencies = [
  "bitvec",
  "byteorder",
@@ -7662,7 +7662,7 @@ dependencies = [
 [[package]]
 name = "nova-verifier"
 version = "0.1.0"
-source = "git+https://github.com/MVPWorkshop/nova-verifier.git#ef381b1eceda43695348861934a9503dfb10acc6"
+source = "git+https://github.com/MVPWorkshop/nova-verifier.git#5682f0d18882b78ae90aa59b387ed784a10b93fc"
 dependencies = [
  "ff",
  "nova-snark",

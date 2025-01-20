@@ -994,6 +994,9 @@ impl pallet_verifiers::Config<pallet_nova_verifier::Nova<Runtime>> for Runtime {
     type OnProofVerified = Poe;
     type WeightInfo =
         pallet_nova_verifier::NovaWeight<weights::pallet_nova_verifier::ZKVWeight<Runtime>>;
+    type Ticket = VkRegistrationHoldConsideration;
+    #[cfg(feature = "runtime-benchmarks")]
+    type Currency = Balances;
 }
 
 parameter_types! {
@@ -1179,6 +1182,7 @@ construct_runtime!(
         SettlementRisc0Pallet: pallet_risc0_verifier = 164,
         SettlementUltraplonkPallet: pallet_ultraplonk_verifier = 165,
         SettlementProofOfSqlPallet: pallet_proofofsql_verifier = 166,
+        SettlementNovaPallet: pallet_nova_verifier = 167,
     }
 );
 
@@ -1306,6 +1310,7 @@ mod benches {
         [pallet_risc0_verifier, Risc0VerifierBench::<Runtime>]
         [pallet_ultraplonk_verifier, UltraplonkVerifierBench::<Runtime>]
         [pallet_proofofsql_verifier, ProofOfSqlVerifierBench::<Runtime>]
+        [pallet_nova_verifier, NovaVerifierBench::<Runtime>]
         // parachains
         [crate::parachains::configuration, Configuration]
         [crate::parachains::disputes, ParasDisputes]
