@@ -79,6 +79,7 @@ native-cache = { workspace = true, features = ["rocksdb"] }
 
 [features]
 default = []
+metadata-hash = ["zkv-runtime/metadata-hash"]
 # Dependencies that are only required if runtime benchmarking should be build.
 runtime-benchmarks = [
 	"frame-benchmarking-cli/runtime-benchmarks",
@@ -95,4 +96,7 @@ try-runtime = [
 	"zkv-runtime/try-runtime",
 	"pallet-transaction-payment/try-runtime",
 	"sp-runtime/try-runtime",
+]
+extend-benchmarks = [
+	"zkv-runtime/extend-benchmarks"
 ]

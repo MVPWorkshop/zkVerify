@@ -12,18 +12,29 @@
 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
+#![cfg(all(feature = "runtime-benchmarks", not(feature = "extend-benchmarks")))]
 
-fn main() {
-    #[cfg(feature = "std")]
-    {
-        std::env::remove_var("CARGO_FEATURE_STD");
-        std::env::remove_var("CARGO_FEATURE_DEFAULT");
-        let builder = substrate_wasm_builder::WasmBuilder::init_with_defaults();
-        // We cannot enable it as default because this option require to build the WASM runtime two
-        // time, one to get the metadata and te recompile it with the metadata hash in an environment
-        // variable.
-        #[cfg(feature = "metadata-hash")]
-        let builder = builder.enable_metadata_hash("ACME", 18);
-        builder.build()
+//! That's a placeholder for the extended benchmarking module. If you run
+//! them they'll not fail but just log some error messages.
+
+use super::Risc0;
+use frame_benchmarking::v2::*;
+
+pub struct Pallet<T: Config>(crate::Pallet<T>);
+
+pub use crate::benchmarking::{Call, Config};
+
+#[benchmarks(where T: pallet_verifiers::Config<Risc0<T>> + pallet_aggregate::Config)]
+mod benchmarks {
+
+    use super::*;
+
+    #[benchmark]
+    fn fake() {
+        log::error!("ERROR: ***** You should enable extend-benchmarks feature to run these benchmarks. ***** ");
+        #[block]
+        {
+            ()
+        }
     }
 }

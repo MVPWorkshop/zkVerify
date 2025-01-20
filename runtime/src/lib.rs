@@ -76,8 +76,6 @@ use ismp::module::IsmpModule;
 use ismp::router::{IsmpRouter, Request, Response};
 use ismp::Error;
 pub use pallet_balances::Call as BalancesCall;
-use pallet_ismp::mmr::{Leaf, Proof, ProofKeys};
-use pallet_ismp::NoOpMmrTree;
 use pallet_session::historical as pallet_session_historical;
 pub use pallet_timestamp::Call as TimestampCall;
 use static_assertions::const_assert;
@@ -917,10 +915,9 @@ impl pallet_verifiers::Config<pallet_groth16_verifier::Groth16<Runtime>> for Run
 }
 
 parameter_types! {
-    pub const Risc0MaxProofSize: u32 = 2455714; // 2455714: risc0 proof size for a 2^24 cycle-count run
-    pub const Risc0MaxPubsSize: u32 = 8 + 4 + 32 * 64; // 8: for bincode::serialize,
-                                                       // 4: bytes for payload length,
-                                                       // 32 * 64: sufficient multiple of 32 bytes
+    pub const Risc0MaxProofSize: u32 = 3067823; // 3067823: risc0 proof size for a 2^24 cycle-count run
+    pub const Risc0MaxPubsSize: u32 = 4 + 32 * 64;  // 4: bytes for payload length,
+                                                    // 32 * 64: sufficient multiple of 32 bytes
 }
 
 impl pallet_risc0_verifier::Config for Runtime {
@@ -1016,8 +1013,8 @@ impl pallet_ismp::Config for Runtime {
     type Router = ModuleRouter;
     type Coprocessor = Coprocessor;
     type ConsensusClients = (ismp_grandpa::consensus::GrandpaConsensusClient<Runtime>,);
-    type Mmr = NoOpMmrTree<Runtime>;
     type WeightProvider = ();
+    type OffchainDB = ();
 }
 
 impl pallet_hyperbridge_aggregations::Config for Runtime {
@@ -1029,6 +1026,7 @@ impl pallet_hyperbridge_aggregations::Config for Runtime {
 impl ismp_grandpa::Config for Runtime {
     type RuntimeEvent = RuntimeEvent;
     type IsmpHost = Ismp;
+    type WeightInfo = weights::ismp_grandpa::ZKVWeight<Runtime>;
 }
 
 #[derive(Default)]
@@ -1265,10 +1263,12 @@ mod benches {
         [pallet_proxy, Proxy]
         [pallet_aggregate, Aggregate]
         [pallet_hyperbridge_aggregations, HyperbridgeAggregations]
+        [ismp_grandpa, IsmpGrandpa]
         [pallet_zksync_verifier, ZksyncVerifierBench::<Runtime>]
         [pallet_fflonk_verifier, FflonkVerifierBench::<Runtime>]
         [pallet_groth16_verifier, Groth16VerifierBench::<Runtime>]
         [pallet_risc0_verifier, Risc0VerifierBench::<Runtime>]
+        [pallet_risc0_verifier_extend, Risc0VerifierExtendBench::<Runtime>]
         [pallet_ultraplonk_verifier, UltraplonkVerifierBench::<Runtime>]
         [pallet_proofofsql_verifier, ProofOfSqlVerifierBench::<Runtime>]
         [pallet_nova_verifier, NovaVerifierBench::<Runtime>]
@@ -1304,10 +1304,12 @@ mod benches {
         [pallet_proxy, Proxy]
         [pallet_aggregate, Aggregate]
         [pallet_hyperbridge_aggregations, HyperbridgeAggregations]
+        [ismp_grandpa, IsmpGrandpa]
         [pallet_zksync_verifier, ZksyncVerifierBench::<Runtime>]
         [pallet_fflonk_verifier, FflonkVerifierBench::<Runtime>]
         [pallet_groth16_verifier, Groth16VerifierBench::<Runtime>]
         [pallet_risc0_verifier, Risc0VerifierBench::<Runtime>]
+        [pallet_risc0_verifier_extend, Risc0VerifierExtendBench::<Runtime>]
         [pallet_ultraplonk_verifier, UltraplonkVerifierBench::<Runtime>]
         [pallet_proofofsql_verifier, ProofOfSqlVerifierBench::<Runtime>]
         [pallet_nova_verifier, NovaVerifierBench::<Runtime>]
@@ -1540,12 +1542,6 @@ impl_runtime_apis! {
 
         fn challenge_period(id: StateMachineId) -> Option<u64> {
             pallet_ismp::Pallet::<Runtime>::challenge_period(id)
-        }
-
-        fn generate_proof(
-            keys: ProofKeys
-        ) -> Result<(Vec<Leaf>, Proof<<Block as BlockT>::Hash>), sp_mmr_primitives::Error> {
-            pallet_ismp::Pallet::<Runtime>::generate_proof(keys)
         }
 
         fn block_events() -> Vec<ismp::events::Event> {
@@ -1815,6 +1811,7 @@ impl_runtime_apis! {
             use pallet_zksync_verifier::benchmarking::Pallet as ZksyncVerifierBench;
             use pallet_groth16_verifier::benchmarking::Pallet as Groth16VerifierBench;
             use pallet_risc0_verifier::benchmarking::Pallet as Risc0VerifierBench;
+            use pallet_risc0_verifier::extend_benchmarking::Pallet as Risc0VerifierExtendBench;
             use pallet_ultraplonk_verifier::benchmarking::Pallet as UltraplonkVerifierBench;
             use pallet_proofofsql_verifier::benchmarking::Pallet as ProofOfSqlVerifierBench;
             use pallet_nova_verifier::benchmarking::Pallet as NovaVerifierBench;
@@ -1847,6 +1844,7 @@ impl_runtime_apis! {
             use pallet_zksync_verifier::benchmarking::Pallet as ZksyncVerifierBench;
             use pallet_groth16_verifier::benchmarking::Pallet as Groth16VerifierBench;
             use pallet_risc0_verifier::benchmarking::Pallet as Risc0VerifierBench;
+            use pallet_risc0_verifier::extend_benchmarking::Pallet as Risc0VerifierExtendBench;
             use pallet_ultraplonk_verifier::benchmarking::Pallet as UltraplonkVerifierBench;
             use pallet_proofofsql_verifier::benchmarking::Pallet as ProofOfSqlVerifierBench;
             use pallet_nova_verifier::benchmarking::Pallet as NovaVerifierBench;
@@ -2016,16 +2014,6 @@ impl_runtime_apis! {
                 }
             }
 
-
-            impl frame_system_benchmarking::Config for Runtime {}
-            impl baseline::Config for Runtime {}
-            impl pallet_election_provider_support_benchmarking::Config for Runtime {}
-
-            impl pallet_session_benchmarking::Config for Runtime {}
-
-            #[cfg(feature = "relay")]
-            impl parachains::slashing::benchmarking::Config for Runtime {}
-
             use frame_support::traits::WhitelistedStorageKeys;
             let whitelist: Vec<TrackedStorageKey> = AllPalletsWithSystem::whitelisted_storage_keys();
 
@@ -2080,4 +2068,18 @@ impl_runtime_apis! {
         }
     }
 
+}
+
+#[cfg(feature = "runtime-benchmarks")]
+mod runtime_benchmarking_extra_config {
+    use crate::Runtime;
+
+    impl frame_system_benchmarking::Config for Runtime {}
+    impl frame_benchmarking::baseline::Config for Runtime {}
+    impl pallet_election_provider_support_benchmarking::Config for Runtime {}
+
+    impl pallet_session_benchmarking::Config for Runtime {}
+
+    #[cfg(feature = "relay")]
+    impl crate::parachains::slashing::benchmarking::Config for Runtime {}
 }

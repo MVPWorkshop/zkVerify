@@ -118,6 +118,7 @@ pallet-xcm-benchmarks = { workspace = true, optional = true }
 xcm-builder = { workspace = true, optional = true }
 xcm-executor = { workspace = true, optional = true }
 xcm = { workspace = true, optional = true }
+xcm-procedural = { workspace = true }
 hex-literal = { workspace = true }
 
 [build-dependencies]
@@ -152,6 +153,7 @@ runtime-benchmarks = [
 	"pallet-vesting/runtime-benchmarks",
 	"pallet-aggregate/runtime-benchmarks",
 	"pallet-hyperbridge-aggregations/runtime-benchmarks",
+	"ismp-grandpa/runtime-benchmarks",
 	"pallet-poe/runtime-benchmarks",
 	"pallet-staking/runtime-benchmarks",
 	"pallet-proxy/runtime-benchmarks",
@@ -173,6 +175,7 @@ runtime-benchmarks = [
 	"pallet-xcm-benchmarks?/runtime-benchmarks",
 ]
 fast-runtime = []
+metadata-hash = ["substrate-wasm-builder/metadata-hash"]
 relay = [
 	"dep:polkadot-primitives",
 	"dep:polkadot-runtime-parachains",
@@ -315,4 +318,7 @@ try-runtime = [
 	"pallet-authority-discovery?/try-runtime",
 	"polkadot-runtime-common?/try-runtime",
 	"pallet-xcm?/try-runtime",
+]
+extend-benchmarks = [
+	"pallet-risc0-verifier/extend-benchmarks"
 ]
