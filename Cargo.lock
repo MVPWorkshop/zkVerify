@@ -7668,7 +7668,7 @@ checksum = "61807f77802ff30975e01f4f071c8ba10c022052f98b3294119f3e615d13e5be"
 [[package]]
 name = "nova-snark"
 version = "0.38.0"
-source = "git+https://github.com/MVPWorkshop/Nova?branch=no_std#d3eb545827b755d7e4c1811df8c9b10c043063ac"
+source = "git+https://github.com/MVPWorkshop/Nova?branch=generic_circuit#d419ae9089ed78ccd07b933483446fb7bae55bef"
 dependencies = [
  "bitvec",
  "byteorder",
@@ -7696,12 +7696,13 @@ dependencies = [
 [[package]]
 name = "nova-verifier"
 version = "0.1.0"
-source = "git+https://github.com/MVPWorkshop/nova-verifier.git#5682f0d18882b78ae90aa59b387ed784a10b93fc"
+source = "git+https://github.com/MVPWorkshop/nova-verifier.git?branch=testing#eba197db049a783f0281ded0f0075721a2862658"
 dependencies = [
  "ff",
  "nova-snark",
  "pasta_curves",
  "postcard",
+ "serde",
  "thiserror 2.0.10",
 ]
 
@@ -8630,10 +8631,14 @@ dependencies = [
  "hp-verifiers",
  "log",
  "nova-verifier",
+ "pallet-aggregate",
+ "pallet-balances",
  "pallet-verifiers",
  "parity-scale-codec",
  "scale-info",
  "sp-core",
+ "sp-io",
+ "sp-runtime",
 ]
 
 [[package]]
