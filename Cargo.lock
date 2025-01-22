@@ -7696,7 +7696,7 @@ dependencies = [
 [[package]]
 name = "nova-verifier"
 version = "0.1.0"
-source = "git+https://github.com/MVPWorkshop/nova-verifier.git?branch=testing#bf6bf2a0759321c4b647e6d5404d931aed9d2935"
+source = "git+https://github.com/MVPWorkshop/nova-verifier.git?branch=testing#35179b9ba6271316605eb646808082fdeae79921"
 dependencies = [
  "ff",
  "nova-snark",

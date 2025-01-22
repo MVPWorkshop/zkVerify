@@ -5,6 +5,8 @@ use frame_support::weights::Weight;
 use hp_verifiers::Verifier;
 use sp_core::*;
 
+use crate::sp_std::vec::Vec;
+
 pub mod benchmarking;
 mod verifier_should;
 mod weight;
@@ -52,6 +54,7 @@ impl<T: Config> Verifier for Nova<T> {
         nova_verifier::verifier::verify_nova(&vk.to_vec(), &proof, &pubs)
             .map_err(|_| log::debug!("Cannot verify Nova proof"))
             .map_err(|_| hp_verifiers::VerifyError::VerifyError)
+        // Ok(())
     }
 
     fn pubs_bytes(pubs: &Self::Pubs) -> hp_verifiers::Cow<[u8]> {
