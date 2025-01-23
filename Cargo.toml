@@ -25,6 +25,7 @@ members = [
     "verifiers/risc0",
     "verifiers/ultraplonk",
     "verifiers/proofofsql",
+    "verifiers/nova",
     "utils/native-cache",
     "relay-node",
     "relay-node/cli",
@@ -44,7 +45,6 @@ members = [
     "paratest/pallets/template",
     "patches/cumulus/client/relay-chain-inprocess-interface",
     "patches/cumulus/client/relay-chain-minimal-node/",
-    "verifiers/nova",
 ]
 
 exclude = ["utils/generate-bags/node-runtime"]

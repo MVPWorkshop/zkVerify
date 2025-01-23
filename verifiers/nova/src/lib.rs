@@ -23,6 +23,7 @@ pub trait Config: 'static {
 
 // TODO -> Check if this is MAX
 pub const VK_MAX_LEN: usize = 10_302_515;
+// pub const VK_MAX_LEN: usize = 10;
 
 // TODO -> Maybe send VerificationKey as a struct, and not bytes?
 pub type Vk = [u8; VK_MAX_LEN];

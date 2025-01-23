@@ -34,10 +34,10 @@ mod benchmarks {
         let (caller, domain_id) = init::<T>();
 
         let vk = include_bytes!("resources/bin/vk.bin");
+        // let vk = VALID_VK;
         let proof = include_bytes!("resources/bin/compressed_snark.bin").to_vec();
         let pubs = include_bytes!("resources/bin/pubs.bin").to_vec();
 
-        // let vk = VALID_VK;
         // let proof = VALID_PROOF;
         // let pubs = VALID_PUBS;
 
@@ -57,9 +57,9 @@ mod benchmarks {
         let (caller, domain_id) = init::<T>();
 
         let vk_hash = sp_core::H256::repeat_byte(2);
-        // let vk = VALID_VK;
         // let proof = VALID_PROOF;
         // let pubs = VALID_PUBS;
+        // let vk = VALID_VK;
         let vk: crate::Vk = *include_bytes!("resources/bin/vk.bin");
         let proof = include_bytes!("resources/bin/compressed_snark.bin").to_vec();
         let pubs = include_bytes!("resources/bin/pubs.bin").to_vec();
@@ -97,6 +97,7 @@ mod benchmarks {
         // setup code
         let caller: T::AccountId = funded_account::<T>();
         let hash = sp_core::H256::repeat_byte(2);
+        // let vk = VALID_VK;
         let vk: crate::Vk = *include_bytes!("resources/bin/vk.bin");
         let vk_entry = VkEntry::new(vk);
         let footprint = Footprint::from_encodable(&vk_entry);

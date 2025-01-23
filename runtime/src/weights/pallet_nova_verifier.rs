@@ -32,6 +32,7 @@ impl<T: frame_system::Config> pallet_nova_verifier::WeightInfo for ZKVWeight<T> 
 
     fn unregister_vk() -> Weight {
         Weight::from_parts(1_000_000, 0)
-            .saturating_add(T::DbWeight::get().writes(1_u64))
+        .saturating_add(RocksDbWeight::get().reads(3_u64))
+        .saturating_add(RocksDbWeight::get().writes(3_u64))        
     }
 }
