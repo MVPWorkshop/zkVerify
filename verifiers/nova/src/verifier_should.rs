@@ -27,11 +27,11 @@ mod reject {
     #[test]
     fn invalid_proof() {
         let mut invalid_proof = VALID_PROOF.clone();
-        invalid_proof[0] = SOME_PARAMETER_CONST.saturating_sub(VALID_VK[0]);
+        invalid_proof[11] = SOME_PARAMETER_CONST.saturating_sub(VALID_VK[0]);
 
         assert_eq!(
             Nova::<Mock>::verify_proof(&VALID_VK, &invalid_proof.to_vec(), &VALID_PUBS.to_vec()),
-            Err(VerifyError::InvalidProofData)
+            Err(VerifyError::VerifyError)
         )
     }
 }

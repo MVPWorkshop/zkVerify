@@ -2,10 +2,11 @@
 
 use super::Nova;
 use frame_benchmarking::v2::*;
+use frame_support::traits::{Consideration, Footprint};
 use frame_system::RawOrigin;
 use hp_verifiers::Verifier;
 use pallet_aggregate::{funded_account, insert_domain};
-use pallet_verifiers::{VkEntry, VkOrHash, Vks};
+use pallet_verifiers::{Tickets, VkEntry, VkOrHash, Vks};
 
 pub struct Pallet<T: Config>(crate::Pallet<T>);
 
@@ -20,7 +21,7 @@ fn init<T: pallet_aggregate::Config>() -> (T::AccountId, u32) {
     (caller, domain_id)
 }
 
-include!("resources.rs");
+// include!("resources.rs");
 
 #[benchmarks(where T: pallet_verifiers::Config<Nova<T>>+ pallet_aggregate::Config)]
 mod benchmarks {
@@ -31,16 +32,21 @@ mod benchmarks {
     fn submit_proof() {
         // setup code
         let (caller, domain_id) = init::<T>();
-        let vk = VALID_VK;
-        let proof = VALID_PROOF;
-        let pubs = VALID_PUBS;
+
+        let vk = include_bytes!("resources/bin/vk.bin");
+        let proof = include_bytes!("resources/bin/compressed_snark.bin").to_vec();
+        let pubs = include_bytes!("resources/bin/pubs.bin").to_vec();
+
+        // let vk = VALID_VK;
+        // let proof = VALID_PROOF;
+        // let pubs = VALID_PUBS;
 
         #[extrinsic_call]
         submit_proof(
             RawOrigin::Signed(caller),
-            VkOrHash::from_vk(vk),
-            proof.to_vec().into(),
-            pubs.to_vec().into(),
+            VkOrHash::from_vk(*vk),
+            proof.into(),
+            pubs.into(),
             Some(domain_id),
         );
     }
@@ -49,12 +55,15 @@ mod benchmarks {
     fn submit_proof_with_vk_hash() {
         // setup code
         let (caller, domain_id) = init::<T>();
-        let vk_hash = sp_core::H256::repeat_byte(2);
-        let vk = VALID_VK;
-        let vk_entry = VkEntry::new(vk);
 
-        let proof = VALID_PROOF;
-        let pubs = VALID_PUBS;
+        let vk_hash = sp_core::H256::repeat_byte(2);
+        // let vk = VALID_VK;
+        // let proof = VALID_PROOF;
+        // let pubs = VALID_PUBS;
+        let vk: crate::Vk = *include_bytes!("resources/bin/vk.bin");
+        let proof = include_bytes!("resources/bin/compressed_snark.bin").to_vec();
+        let pubs = include_bytes!("resources/bin/pubs.bin").to_vec();
+        let vk_entry = VkEntry::new(vk);
 
         Vks::<T, Nova<T>>::insert(vk_hash, vk_entry);
 
@@ -62,8 +71,8 @@ mod benchmarks {
         submit_proof(
             RawOrigin::Signed(caller),
             VkOrHash::from_hash(vk_hash),
-            proof.to_vec().into(),
-            pubs.to_vec().into(),
+            proof.into(),
+            pubs.into(),
             Some(domain_id),
         );
     }
@@ -71,14 +80,33 @@ mod benchmarks {
     #[benchmark]
     fn register_vk() {
         // setup code
-        let (caller, _domain_id) = init::<T>();
-        let vk = VALID_VK;
+        // let (caller, _domain_id) = init::<T>();
+        let caller: T::AccountId = funded_account::<T>();
+        let vk: crate::Vk = *include_bytes!("resources/bin/vk.bin");
+        // let vk = VALID_VK;
 
         #[extrinsic_call]
         register_vk(RawOrigin::Signed(caller), vk.clone().into());
 
         // Verify
         assert!(Vks::<T, Nova<T>>::get(Nova::<T>::vk_hash(&vk)).is_some());
+    }
+
+    #[benchmark]
+    fn unregister_vk() {
+        // setup code
+        let caller: T::AccountId = funded_account::<T>();
+        let hash = sp_core::H256::repeat_byte(2);
+        let vk: crate::Vk = *include_bytes!("resources/bin/vk.bin");
+        let vk_entry = VkEntry::new(vk);
+        let footprint = Footprint::from_encodable(&vk_entry);
+        let ticket = T::Ticket::new(&caller, footprint).unwrap();
+
+        Vks::<T, Nova<T>>::insert(hash, vk_entry);
+        Tickets::<T, Nova<T>>::insert((caller.clone(), hash), ticket);
+
+        #[extrinsic_call]
+        unregister_vk(RawOrigin::Signed(caller), hash);
     }
 
     impl_benchmark_test_suite!(Pallet, super::mock::test_ext(), super::mock::Test);
