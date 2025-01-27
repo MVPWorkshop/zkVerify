@@ -59,7 +59,7 @@ version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d122413f284cf2d62fb1b7db97e02edb8cda96d769b16e443a4f6195e35662b0"
 dependencies = [
- "crypto-common",
+ "crypto-common 0.1.6",
  "generic-array 0.14.7",
 ]
 
@@ -194,7 +194,7 @@ dependencies = [
  "ruint",
  "rustc-hash 2.1.0",
  "serde",
- "sha3",
+ "sha3 0.10.8",
  "tiny-keccak 2.0.2",
 ]
 
@@ -1440,6 +1440,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "block-buffer"
+version = "0.11.0-rc.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3fd016a0ddc7cb13661bf5576073ce07330a693f8608a1320b4e20561cc12cdc"
+dependencies = [
+ "hybrid-array",
+]
+
+[[package]]
 name = "blocking"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1825,7 +1834,7 @@ version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "773f3b9af64447d2ce9850330c473515014aa235e6a783b02db81ff39e4a3dad"
 dependencies = [
- "crypto-common",
+ "crypto-common 0.1.6",
  "inout",
  "zeroize",
 ]
@@ -2413,6 +2422,15 @@ dependencies = [
  "generic-array 0.14.7",
  "rand_core 0.6.4",
  "typenum",
+]
+
+[[package]]
+name = "crypto-common"
+version = "0.2.0-rc.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b0b8ce8218c97789f16356e7896b3714f26c2ee1079b79c0b7ae7064bb9089fa"
+dependencies = [
+ "hybrid-array",
 ]
 
 [[package]]
@@ -3375,8 +3393,18 @@ checksum = "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292"
 dependencies = [
  "block-buffer 0.10.4",
  "const-oid",
- "crypto-common",
+ "crypto-common 0.1.6",
  "subtle 2.6.1",
+]
+
+[[package]]
+name = "digest"
+version = "0.11.0-pre.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf2e3d6615d99707295a9673e889bf363a04b2a466bd320c65a72536f7577379"
+dependencies = [
+ "block-buffer 0.11.0-rc.3",
+ "crypto-common 0.2.0-rc.1",
 ]
 
 [[package]]
@@ -3994,7 +4022,7 @@ dependencies = [
  "digest 0.10.7",
  "ethnum",
  "serde",
- "sha3",
+ "sha3 0.10.8",
  "snafu 0.7.5",
  "substrate-bn",
 ]
@@ -5247,6 +5275,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
 
 [[package]]
+name = "hybrid-array"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f2d35805454dc9f8662a98d6d61886ffe26bd465f5960e0e55345c70d5c0d2a9"
+dependencies = [
+ "typenum",
+]
+
+[[package]]
 name = "hyper"
 version = "0.14.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6046,6 +6083,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "keccak"
+version = "0.2.0-pre.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a7cdd4f0dc5807b9a2b25dd48a3f58e862606fe7bd47f41ecde36e97422d7e90"
+dependencies = [
+ "cpufeatures",
+]
+
+[[package]]
 name = "keccak-asm"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6109,7 +6155,7 @@ dependencies = [
  "pico-args",
  "regex",
  "regex-syntax 0.8.5",
- "sha3",
+ "sha3 0.10.8",
  "string_cache",
  "term",
  "unicode-xid",
@@ -7140,7 +7186,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "58c38e2799fc0978b65dfff8023ec7843e2330bb462f19198840b34b6582397d"
 dependencies = [
  "byteorder",
- "keccak",
+ "keccak 0.1.5",
  "rand_core 0.6.4",
  "zeroize",
 ]
@@ -7344,7 +7390,7 @@ dependencies = [
  "digest 0.10.7",
  "multihash-derive",
  "sha2 0.10.8",
- "sha3",
+ "sha3 0.10.8",
  "unsigned-varint 0.7.2",
 ]
 
@@ -7361,7 +7407,7 @@ dependencies = [
  "digest 0.10.7",
  "multihash-derive",
  "sha2 0.10.8",
- "sha3",
+ "sha3 0.10.8",
  "unsigned-varint 0.7.2",
 ]
 
@@ -7668,14 +7714,13 @@ checksum = "61807f77802ff30975e01f4f071c8ba10c022052f98b3294119f3e615d13e5be"
 [[package]]
 name = "nova-snark"
 version = "0.38.0"
-source = "git+https://github.com/MVPWorkshop/Nova?branch=generic_circuit#d419ae9089ed78ccd07b933483446fb7bae55bef"
+source = "git+https://github.com/MVPWorkshop/Nova?branch=no_std#8e745786376505bb93b516819b14508d5dcd504d"
 dependencies = [
  "bitvec",
  "byteorder",
- "digest 0.10.7",
+ "digest 0.11.0-pre.9",
  "ff",
  "generic-array 1.2.0",
- "getrandom",
  "group",
  "hashbrown 0.15.2",
  "itertools 0.13.0",
@@ -7688,7 +7733,7 @@ dependencies = [
  "rand_chacha",
  "rand_core 0.6.4",
  "serde",
- "sha3",
+ "sha3 0.11.0-pre.4",
  "subtle 2.6.1",
  "thiserror 2.0.10",
 ]
@@ -7696,7 +7741,7 @@ dependencies = [
 [[package]]
 name = "nova-verifier"
 version = "0.1.0"
-source = "git+https://github.com/MVPWorkshop/nova-verifier.git?branch=testing#35179b9ba6271316605eb646808082fdeae79921"
+source = "git+https://github.com/MVPWorkshop/nova-verifier.git#172fbf4c1824c98cf0c573e9fc9a21bd91f5986b"
 dependencies = [
  "ff",
  "nova-snark",
@@ -14080,7 +14125,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "75872d278a8f37ef87fa0ddbda7802605cb18344497949862c0d4dcb291eba60"
 dependencies = [
  "digest 0.10.7",
- "keccak",
+ "keccak 0.1.5",
+]
+
+[[package]]
+name = "sha3"
+version = "0.11.0-pre.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e485881f388c2818d709796dc883c1ffcadde9d1f0e054f3a5c14974185261a6"
+dependencies = [
+ "digest 0.11.0-pre.9",
+ "keccak 0.2.0-pre.0",
 ]
 
 [[package]]
@@ -14263,7 +14318,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.10.8",
- "sha3",
+ "sha3 0.10.8",
  "siphasher",
  "slab",
  "smallvec",
@@ -14677,7 +14732,7 @@ dependencies = [
  "byteorder",
  "digest 0.10.7",
  "sha2 0.10.8",
- "sha3",
+ "sha3 0.10.8",
  "twox-hash",
 ]
 
@@ -16718,7 +16773,7 @@ version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc1de2c688dc15305988b563c3854064043356019f97a4b46276fe734c4f07ea"
 dependencies = [
- "crypto-common",
+ "crypto-common 0.1.6",
  "subtle 2.6.1",
 ]
 
@@ -16840,7 +16895,7 @@ dependencies = [
  "rand_chacha",
  "rand_core 0.6.4",
  "sha2 0.10.8",
- "sha3",
+ "sha3 0.10.8",
  "thiserror 1.0.69",
  "zeroize",
 ]

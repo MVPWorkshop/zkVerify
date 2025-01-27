@@ -30,7 +30,7 @@ pallet-aggregate = { workspace = true, optional = true, default-features = false
     "runtime-benchmarks",
 ] }
 
-nova-verifier = { git = "https://github.com/MVPWorkshop/nova-verifier.git", branch = "testing", default-features = false }
+nova-verifier = { git = "https://github.com/MVPWorkshop/nova-verifier.git", default-features = false }
 
 [dev-dependencies]
 hex-literal = { version = "0.4.1" }
