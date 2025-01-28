@@ -988,7 +988,7 @@ impl pallet_nova_verifier::Config for Runtime {
 
 impl pallet_verifiers::Config<pallet_nova_verifier::Nova<Runtime>> for Runtime {
     type RuntimeEvent = RuntimeEvent;
-    type OnProofVerified = Poe;
+    type OnProofVerified = (Poe, Aggregate);
     type WeightInfo =
         pallet_nova_verifier::NovaWeight<weights::pallet_nova_verifier::ZKVWeight<Runtime>>;
     type Ticket = VkRegistrationHoldConsideration;
@@ -1081,7 +1081,7 @@ construct_runtime!(
         Proxy: pallet_proxy,
         CommonVerifiers: pallet_verifiers::common,
         SettlementProofOfSqlPallet: pallet_proofofsql_verifier,
-        SettlementNovaPallet : pallet_nova_verifier,
+        SettlementNovaPallet: pallet_nova_verifier,
         Aggregate: pallet_aggregate,
         Ismp: pallet_ismp,
         IsmpGrandpa: ismp_grandpa,

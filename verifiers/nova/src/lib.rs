@@ -5,6 +5,8 @@ use frame_support::weights::Weight;
 use hp_verifiers::Verifier;
 use sp_core::*;
 
+use crate::sp_std::vec::Vec;
+
 pub mod benchmarking;
 mod verifier_should;
 mod weight;
@@ -20,14 +22,16 @@ pub trait Config: 'static {
 }
 
 // TODO -> Check if this is MAX
-pub const VK_MAX_LEN: usize = 10302515;
+pub const VK_MAX_LEN: usize = 10_302_515;
+// pub const VK_MAX_LEN: usize = 10;
 
 // TODO -> Maybe send VerificationKey as a struct, and not bytes?
 pub type Vk = [u8; VK_MAX_LEN];
+// pub type Vk = Vec<u8>;
 pub type Proof = Vec<u8>;
 
 // TODO -> Additional info
-pub type Pubs = [u8; 32];
+pub type Pubs = Vec<u8>;
 
 #[pallet_verifiers::verifier]
 pub struct Nova<T>;
@@ -44,13 +48,14 @@ impl<T: Config> Verifier for Nova<T> {
     fn verify_proof(
         vk: &Self::Vk,
         proof: &Self::Proof,
-        _pubs: &Self::Pubs,
+        pubs: &Self::Pubs,
     ) -> Result<(), hp_verifiers::VerifyError> {
         log::trace!("Verifying proof");
 
-        nova_verifier::verifier::verify(&vk.to_vec(), &proof)
+        nova_verifier::verifier::verify_nova(&vk.to_vec(), &proof, &pubs)
             .map_err(|_| log::debug!("Cannot verify Nova proof"))
             .map_err(|_| hp_verifiers::VerifyError::VerifyError)
+        // Ok(())
     }
 
     fn pubs_bytes(pubs: &Self::Pubs) -> hp_verifiers::Cow<[u8]> {

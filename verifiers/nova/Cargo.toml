@@ -24,13 +24,18 @@ frame-support = { workspace = true }
 frame-system = { workspace = true }
 frame-benchmarking = { workspace = true, optional = true }
 sp-core = { workspace = true }
-# sp-runtime = { workspace = true, optional = true }
-# sp-io = { workspace = true, optional = true }
+sp-runtime = { workspace = true, optional = true }
+sp-io = { workspace = true, optional = true }
+pallet-aggregate = { workspace = true, optional = true, default-features = false, features = [
+    "runtime-benchmarks",
+] }
 
 nova-verifier = { git = "https://github.com/MVPWorkshop/nova-verifier.git", default-features = false }
 
 [dev-dependencies]
 hex-literal = { version = "0.4.1" }
+pallet-balances = { workspace = true, features = ["std", "runtime-benchmarks"] }
+
 
 [features]
 default = ["std"]
@@ -50,6 +55,7 @@ runtime-benchmarks = [
     "frame-support/runtime-benchmarks",
     "pallet-verifiers/runtime-benchmarks",
     "dep:hex-literal",
-    # "dep:sp-runtime",
-    # "dep:sp-io",
+    "dep:pallet-aggregate",
+    "dep:sp-io",
+    "dep:sp-runtime",
 ]
