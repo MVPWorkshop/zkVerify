@@ -33,7 +33,7 @@ mod benchmarks {
         // setup code
         let (caller, domain_id) = init::<T>();
 
-        let vk = include_bytes!("resources/bin/vk.bin");
+        let vk: crate::Vk = include_bytes!("resources/bin/vk.bin").to_vec().into();
         // let vk = VALID_VK;
         let proof = include_bytes!("resources/bin/compressed_snark.bin").to_vec();
         let pubs = include_bytes!("resources/bin/pubs.bin").to_vec();
@@ -44,7 +44,7 @@ mod benchmarks {
         #[extrinsic_call]
         submit_proof(
             RawOrigin::Signed(caller),
-            VkOrHash::from_vk(*vk),
+            VkOrHash::from_vk(vk),
             proof.into(),
             pubs.into(),
             Some(domain_id),
@@ -60,7 +60,7 @@ mod benchmarks {
         // let proof = VALID_PROOF;
         // let pubs = VALID_PUBS;
         // let vk = VALID_VK;
-        let vk: crate::Vk = *include_bytes!("resources/bin/vk.bin");
+        let vk: crate::Vk = include_bytes!("resources/bin/vk.bin").to_vec().into();
         let proof = include_bytes!("resources/bin/compressed_snark.bin").to_vec();
         let pubs = include_bytes!("resources/bin/pubs.bin").to_vec();
         let vk_entry = VkEntry::new(vk);
@@ -82,7 +82,7 @@ mod benchmarks {
         // setup code
         // let (caller, _domain_id) = init::<T>();
         let caller: T::AccountId = funded_account::<T>();
-        let vk: crate::Vk = *include_bytes!("resources/bin/vk.bin");
+        let vk: crate::Vk = include_bytes!("resources/bin/vk.bin").to_vec().into();
         // let vk = VALID_VK;
 
         #[extrinsic_call]
@@ -98,7 +98,7 @@ mod benchmarks {
         let caller: T::AccountId = funded_account::<T>();
         let hash = sp_core::H256::repeat_byte(2);
         // let vk = VALID_VK;
-        let vk: crate::Vk = *include_bytes!("resources/bin/vk.bin");
+        let vk: crate::Vk = include_bytes!("resources/bin/vk.bin").to_vec().into();
         let vk_entry = VkEntry::new(vk);
         let footprint = Footprint::from_encodable(&vk_entry);
         let ticket = T::Ticket::new(&caller, footprint).unwrap();

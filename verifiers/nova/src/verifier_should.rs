@@ -14,9 +14,12 @@ include!("resources.rs");
 
 #[test]
 fn verify_valid_proof() {
-    assert!(
-        Nova::<Mock>::verify_proof(&VALID_VK, &VALID_PROOF.to_vec(), &VALID_PUBS.to_vec()).is_ok()
-    );
+    assert!(Nova::<Mock>::verify_proof(
+        &VALID_VK.to_vec().into(),
+        &VALID_PROOF.to_vec(),
+        &VALID_PUBS.to_vec()
+    )
+    .is_ok());
 }
 
 mod reject {
@@ -30,7 +33,11 @@ mod reject {
         invalid_proof[11] = SOME_PARAMETER_CONST.saturating_sub(VALID_VK[0]);
 
         assert_eq!(
-            Nova::<Mock>::verify_proof(&VALID_VK, &invalid_proof.to_vec(), &VALID_PUBS.to_vec()),
+            Nova::<Mock>::verify_proof(
+                &VALID_VK.to_vec().into(),
+                &invalid_proof.to_vec(),
+                &VALID_PUBS.to_vec()
+            ),
             Err(VerifyError::VerifyError)
         )
     }
