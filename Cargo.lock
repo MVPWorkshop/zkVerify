@@ -1196,6 +1196,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "bincode"
+version = "2.0.0-rc.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f11ea1a0346b94ef188834a65c068a03aec181c94896d481d7a0a40d85b0ce95"
+dependencies = [
+ "bincode_derive",
+ "serde",
+]
+
+[[package]]
+name = "bincode_derive"
+version = "2.0.0-rc.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7e30759b3b99a1b802a7a3aa21c85c3ded5c28e1c83170d82d70f08bbf7f3e4c"
+dependencies = [
+ "virtue",
+]
+
+[[package]]
 name = "bindgen"
 version = "0.65.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7500,7 +7519,7 @@ dependencies = [
  "ark-ec",
  "ark-ff 0.4.2",
  "ark-scale",
- "bincode",
+ "bincode 1.3.3",
  "hp-groth16",
  "hp-verifiers",
  "log",
@@ -7653,6 +7672,33 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "43794a0ace135be66a25d3ae77d41b91615fb68ae937f904090203e81f755b65"
 
 [[package]]
+name = "no_std_nova_snark"
+version = "0.38.0"
+source = "git+https://github.com/MVPWorkshop/Nova?branch=public_fields#20a040751aff36a90fb76fbde6b389fa279fb6f1"
+dependencies = [
+ "bincode 2.0.0-rc.3",
+ "bitvec",
+ "byteorder",
+ "digest 0.11.0-pre.9",
+ "ff",
+ "generic-array 1.2.0",
+ "group",
+ "hashbrown 0.15.2",
+ "itertools 0.13.0",
+ "libm",
+ "num-bigint 0.4.6",
+ "num-integer",
+ "num-traits",
+ "pasta_curves",
+ "rand_chacha",
+ "rand_core 0.6.4",
+ "serde",
+ "sha3 0.11.0-pre.4",
+ "subtle 2.6.1",
+ "thiserror 2.0.10",
+]
+
+[[package]]
 name = "node-subsystem-test-helpers"
 version = "0.1.0"
 dependencies = [
@@ -7712,39 +7758,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "61807f77802ff30975e01f4f071c8ba10c022052f98b3294119f3e615d13e5be"
 
 [[package]]
-name = "nova-snark"
-version = "0.38.0"
-source = "git+https://github.com/MVPWorkshop/Nova?branch=no_std#8e745786376505bb93b516819b14508d5dcd504d"
-dependencies = [
- "bitvec",
- "byteorder",
- "digest 0.11.0-pre.9",
- "ff",
- "generic-array 1.2.0",
- "group",
- "hashbrown 0.15.2",
- "itertools 0.13.0",
- "libm",
- "num-bigint 0.4.6",
- "num-integer",
- "num-traits",
- "pasta_curves",
- "postcard",
- "rand_chacha",
- "rand_core 0.6.4",
- "serde",
- "sha3 0.11.0-pre.4",
- "subtle 2.6.1",
- "thiserror 2.0.10",
-]
-
-[[package]]
 name = "nova-verifier"
 version = "0.1.0"
-source = "git+https://github.com/MVPWorkshop/nova-verifier.git#172fbf4c1824c98cf0c573e9fc9a21bd91f5986b"
+source = "git+https://github.com/MVPWorkshop/nova-verifier.git#50a6e4e6524b14596b491421f675e1b8c0fb1327"
 dependencies = [
  "ff",
- "nova-snark",
+ "hex",
+ "no_std_nova_snark",
  "pasta_curves",
  "postcard",
  "serde",
@@ -16871,6 +16891,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 
 [[package]]
+name = "virtue"
+version = "0.0.13"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9dcc60c0624df774c82a0ef104151231d37da4962957d691c011c852b2473314"
+
+[[package]]
 name = "void"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -17137,7 +17163,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f907fdead3153cb9bfb7a93bbd5b62629472dc06dee83605358c64c52ed3dda9"
 dependencies = [
  "anyhow",
- "bincode",
+ "bincode 1.3.3",
  "cfg-if 1.0.0",
  "indexmap 1.9.3",
  "libc",
@@ -17175,7 +17201,7 @@ checksum = "c86437fa68626fe896e5afc69234bb2b5894949083586535f200385adfd71213"
 dependencies = [
  "anyhow",
  "base64 0.21.7",
- "bincode",
+ "bincode 1.3.3",
  "directories-next",
  "file-per-thread-logger",
  "log",
@@ -17251,7 +17277,7 @@ checksum = "0de48df552cfca1c9b750002d3e07b45772dd033b0b206d5c0968496abf31244"
 dependencies = [
  "addr2line 0.19.0",
  "anyhow",
- "bincode",
+ "bincode 1.3.3",
  "cfg-if 1.0.0",
  "cpp_demangle 0.3.5",
  "gimli 0.27.3",

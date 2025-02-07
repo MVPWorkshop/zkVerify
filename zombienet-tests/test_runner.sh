@@ -33,7 +33,7 @@ BASE_URL="https://github.com/paritytech/zombienet/releases/download/v1.3.109"
 if [ "$OS" == "Linux" ]; then
     ZOMBIENET_BINARY="zombienet-linux-x64"
 elif [ "$OS" == "Darwin" ]; then
-    ZOMBIENET_BINARY="zombienet-macos"
+    ZOMBIENET_BINARY="zombienet-macos-arm64"
 else
     echo -e "${TXT_BIRED}ERROR: ${TXT_BIBLK}Unsupported operating system.${TXT_NORML}"
     exit 4
