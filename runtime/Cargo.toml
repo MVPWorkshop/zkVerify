@@ -1,6 +1,6 @@
 [package]
 name = "zkv-runtime"
-version = "0.9.0"
+version = "0.10.0"
 description = "zkVerify Mainchain Runtime."
 authors.workspace = true
 homepage = "https://github.com/HorizenLabs/zkVerify"
@@ -72,7 +72,7 @@ serde_json = { workspace = true, features = ["alloc"] }
 sp-genesis-builder = { workspace = true }
 sp-weights = { workspace = true }
 sp-io = { workspace = true }
-log = "0.4.20"
+log = { workspace = true }
 
 # Used for the node template's RPCs
 frame-system-rpc-runtime-api = { workspace = true }
@@ -87,6 +87,7 @@ frame-system-benchmarking = { workspace = true, optional = true }
 
 # Custom logic
 pallet-aggregate = { workspace = true }
+pallet-claim = { workspace = true }
 pallet-hyperbridge-aggregations = { workspace = true }
 pallet-poe = { workspace = true }
 static_assertions = "1.1.0"
@@ -152,6 +153,7 @@ runtime-benchmarks = [
 	"pallet-utility/runtime-benchmarks",
 	"pallet-vesting/runtime-benchmarks",
 	"pallet-aggregate/runtime-benchmarks",
+	"pallet-claim/runtime-benchmarks",
 	"pallet-hyperbridge-aggregations/runtime-benchmarks",
 	"ismp-grandpa/runtime-benchmarks",
 	"pallet-poe/runtime-benchmarks",
@@ -173,6 +175,10 @@ runtime-benchmarks = [
 	"xcm-executor?/runtime-benchmarks",
 	"pallet-xcm?/runtime-benchmarks",
 	"pallet-xcm-benchmarks?/runtime-benchmarks",
+	"pallet-ismp/runtime-benchmarks",
+	"pallet-message-queue/runtime-benchmarks",
+	"pallet-offences/runtime-benchmarks",
+	"sp-staking/runtime-benchmarks"
 ]
 fast-runtime = []
 metadata-hash = ["substrate-wasm-builder/metadata-hash"]
@@ -237,6 +243,7 @@ std = [
 	"pallet-proxy/std",
 	"pallet-verifiers/std",
 	"pallet-aggregate/std",
+	"pallet-claim/std",
 	"pallet-poe/std",
 	"proof-of-existence-rpc-runtime-api/std",
 	"aggregate-rpc-runtime-api/std",
@@ -275,6 +282,13 @@ std = [
 	"pallet-authority-discovery?/std",
 	"authority-discovery-primitives?/std",
 	"polkadot-runtime-common?/std",
+	"log/std",
+	"pallet-election-provider-support-benchmarking?/std",
+	"pallet-session-benchmarking?/std",
+	"sp-mmr-primitives/std",
+	"xcm?/std",
+	"xcm-builder?/std",
+	"xcm-executor?/std"
 ]
 try-runtime = [
 	"frame-executive/try-runtime",
@@ -311,6 +325,7 @@ try-runtime = [
 	"pallet-proxy/try-runtime",
 	"pallet-verifiers/try-runtime",
 	"pallet-aggregate/try-runtime",
+	"pallet-claim/try-runtime",
 	"pallet-poe/try-runtime",
 	"sp-runtime/try-runtime",
 	"pallet-verifiers/try-runtime",
@@ -318,6 +333,8 @@ try-runtime = [
 	"pallet-authority-discovery?/try-runtime",
 	"polkadot-runtime-common?/try-runtime",
 	"pallet-xcm?/try-runtime",
+	"pallet-message-queue/try-runtime",
+	"pallet-zksync-verifier/try-runtime"
 ]
 extend-benchmarks = [
 	"pallet-risc0-verifier/extend-benchmarks"
