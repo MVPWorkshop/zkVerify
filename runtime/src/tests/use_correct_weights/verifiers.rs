@@ -110,3 +110,18 @@ fn pallet_settlement_proofofsql() {
         crate::weights::pallet_proofofsql_verifier::ZKVWeight::<Runtime>::submit_proof()
     );
 }
+
+#[test]
+fn pallet_settlement_nova() {
+    use pallet_nova_verifier::{Nova, WeightInfo};
+
+    assert_eq!(
+        <<Runtime as pallet_verifiers::Config<Nova<Runtime>>>::WeightInfo as
+            pallet_verifiers::WeightInfo<Nova<Runtime>>>
+            ::submit_proof(
+            &Vec::new(),
+            &Vec::new()
+        ),
+        crate::weights::pallet_nova_verifier::ZKVWeight::<Runtime>::submit_proof()
+    );
+}
