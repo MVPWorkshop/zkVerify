@@ -18,6 +18,82 @@
 #[allow(unused_imports)]
 use super::*;
 
+mod migrate_change_vk_format {
+
+    use super::*;
+
+    #[allow(dead_code)]
+    pub struct RemoveUltraplonkVks;
+
+    #[cfg(feature = "try-runtime")]
+    type Balances = sp_std::collections::btree_map::BTreeMap<crate::AccountId, crate::Balance>;
+
+    impl RemoveUltraplonkVks {
+        #[cfg(feature = "try-runtime")]
+        fn get_all_tickets_balances() -> Balances {
+            use frame_support::traits::fungible::Inspect;
+
+            pallet_ultraplonk_verifier::Tickets::<Runtime>::iter()
+                .map(|((id, _), _)| {
+                    let balance = crate::Balances::balance(&id);
+                    (id, balance)
+                })
+                .collect::<sp_std::collections::btree_map::BTreeMap<_, _>>()
+        }
+    }
+
+    impl frame_support::traits::OnRuntimeUpgrade for RemoveUltraplonkVks {
+        #[cfg(feature = "try-runtime")]
+        fn pre_upgrade() -> Result<sp_std::vec::Vec<u8>, sp_runtime::TryRuntimeError> {
+            use codec::Encode;
+
+            frame_support::ensure!(
+                crate::System::last_runtime_upgrade_spec_version() < 10_000,
+                "must upgrade linearly"
+            );
+
+            Ok(Self::get_all_tickets_balances().encode())
+        }
+
+        /// Migrates validators and nominators to bags list for the staking pallet.
+        fn on_runtime_upgrade() -> Weight {
+            use frame_support::traits::UncheckedOnRuntimeUpgrade;
+            if crate::System::last_runtime_upgrade_spec_version() >= 10_000 {
+                log::warn!("Remove old migration");
+                return Default::default();
+            }
+            let w = pallet_verifiers::migrations::RemoveAllVks::<
+                Runtime,
+                pallet_ultraplonk_verifier::Ultraplonk<Runtime>,
+            >::on_runtime_upgrade();
+
+            log::info!("Removed all vk from ultraplonk-verifier");
+
+            w
+        }
+
+        #[cfg(feature = "try-runtime")]
+        fn post_upgrade(state: sp_std::vec::Vec<u8>) -> Result<(), sp_runtime::TryRuntimeError> {
+            use codec::Decode;
+
+            let old = Balances::decode(&mut &state[..]).unwrap();
+
+            let mut ok = true;
+
+            for (id, old_balance) in old.iter() {
+                use frame_support::traits::fungible::Inspect;
+                let new_balance = crate::Balances::balance(&id);
+                if old_balance >= &new_balance {
+                    log::warn!("User {id:?} balance has not refunded [old] {old_balance} [new] {new_balance}");
+                    ok = false;
+                }
+            }
+            frame_support::ensure!(ok, "Some users not refunded");
+            Ok(())
+        }
+    }
+}
+
 pub mod migrate_staking_to_bags_list {
     use super::*;
     use frame_election_provider_support::SortedListProvider;
@@ -79,21 +155,4 @@ pub mod migrate_staking_to_bags_list {
     }
 }
 
-pub type Unreleased = (
-    pallet_staking::migrations::v15::MigrateV14ToV15<Runtime>,
-    pallet_verifiers::migrations::v1::MigrateV0ToV1<Runtime, pallet_fflonk_verifier::Fflonk>,
-    pallet_verifiers::migrations::v1::MigrateV0ToV1<
-        Runtime,
-        pallet_groth16_verifier::Groth16<Runtime>,
-    >,
-    pallet_verifiers::migrations::v1::MigrateV0ToV1<Runtime, pallet_risc0_verifier::Risc0<Runtime>>,
-    pallet_verifiers::migrations::v1::MigrateV0ToV1<
-        Runtime,
-        pallet_proofofsql_verifier::ProofOfSql<Runtime>,
-    >,
-    pallet_verifiers::migrations::v1::MigrateV0ToV1<
-        Runtime,
-        pallet_ultraplonk_verifier::Ultraplonk<Runtime>,
-    >,
-    pallet_verifiers::migrations::v1::MigrateV0ToV1<Runtime, pallet_zksync_verifier::Zksync>,
-);
+pub type Unreleased = ();

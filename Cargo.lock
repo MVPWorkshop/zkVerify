@@ -157,6 +157,8 @@ dependencies = [
  "alloy-sol-types",
  "const-hex",
  "itoa",
+ "serde",
+ "serde_json",
  "winnow",
 ]
 
@@ -169,6 +171,7 @@ dependencies = [
  "alloy-primitives",
  "alloy-sol-type-parser",
  "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -271,9 +274,11 @@ version = "0.8.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3b478bc9c0c4737a04cd976accde4df7eba0bdc0d90ad6ff43d58bc93cf79c1"
 dependencies = [
+ "alloy-json-abi",
  "alloy-primitives",
  "alloy-sol-macro",
  "const-hex",
+ "serde",
 ]
 
 [[package]]
@@ -421,7 +426,7 @@ dependencies = [
 [[package]]
 name = "ark-bn254-ext"
 version = "0.4.0"
-source = "git+https://github.com/zkVerify/accelerated-bn-cryptography.git#c764589d32d2460c41fb0fbee4c2012d1914e1f7"
+source = "git+https://github.com/zkVerify/accelerated-bn-cryptography.git?tag=v0.4.0#c764589d32d2460c41fb0fbee4c2012d1914e1f7"
 dependencies = [
  "ark-bn254",
  "ark-ec",
@@ -578,7 +583,7 @@ dependencies = [
 [[package]]
 name = "ark-models-ext"
 version = "0.4.0"
-source = "git+https://github.com/zkVerify/accelerated-bn-cryptography.git#c764589d32d2460c41fb0fbee4c2012d1914e1f7"
+source = "git+https://github.com/zkVerify/accelerated-bn-cryptography.git?tag=v0.4.0#c764589d32d2460c41fb0fbee4c2012d1914e1f7"
 dependencies = [
  "ark-ec",
  "ark-ff 0.4.2",
@@ -609,6 +614,7 @@ dependencies = [
  "ark-ff 0.4.2",
  "ark-std 0.4.0",
  "tracing",
+ "tracing-subscriber 0.2.25",
 ]
 
 [[package]]
@@ -1052,17 +1058,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "atty"
-version = "0.2.14"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d9b39be18770d11421cdb1b9947a45dd3f37e93092cbf377614828a319d5fee8"
-dependencies = [
- "hermit-abi 0.1.19",
- "libc",
- "winapi",
-]
-
-[[package]]
 name = "auto_impl"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1244,7 +1239,7 @@ dependencies = [
  "bitflags 2.7.0",
  "cexpr",
  "clang-sys",
- "itertools 0.12.1",
+ "itertools 0.11.0",
  "lazy_static",
  "lazycell",
  "log",
@@ -3766,19 +3761,6 @@ dependencies = [
 
 [[package]]
 name = "env_logger"
-version = "0.9.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a12e6657c4c97ebab115a42dcee77225f7f482cdd841cf7088c657a42e9e00e7"
-dependencies = [
- "atty",
- "humantime",
- "log",
- "regex",
- "termcolor",
-]
-
-[[package]]
-name = "env_logger"
 version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4cd405aab171cb85d6735e5c8d9db038c17d3ca007a4d2c25f337935c3d90580"
@@ -4068,7 +4050,7 @@ version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "84f2e425d9790201ba4af4630191feac6dcc98765b118d4d18e91d23c2353866"
 dependencies = [
- "env_logger 0.10.2",
+ "env_logger",
  "log",
 ]
 
@@ -5061,15 +5043,6 @@ name = "heck"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
-
-[[package]]
-name = "hermit-abi"
-version = "0.1.19"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "62b467343b94ba476dcb2500d242dadbb39557df889310ac77c5d99100aaac33"
-dependencies = [
- "libc",
-]
 
 [[package]]
 name = "hermit-abi"
@@ -7020,7 +6993,7 @@ dependencies = [
 
 [[package]]
 name = "mainchain"
-version = "0.7.0"
+version = "0.8.0"
 dependencies = [
  "aggregate-rpc",
  "clap",
@@ -7674,7 +7647,7 @@ checksum = "43794a0ace135be66a25d3ae77d41b91615fb68ae937f904090203e81f755b65"
 [[package]]
 name = "no_std_nova_snark"
 version = "0.38.0"
-source = "git+https://github.com/MVPWorkshop/Nova?branch=public_fields#20a040751aff36a90fb76fbde6b389fa279fb6f1"
+source = "git+https://github.com/MVPWorkshop/Nova?branch=no_std#947762c7a777532dea461b6e6b27867572e04e16"
 dependencies = [
  "bincode 2.0.0-rc.3",
  "bitvec",
@@ -7760,7 +7733,7 @@ checksum = "61807f77802ff30975e01f4f071c8ba10c022052f98b3294119f3e615d13e5be"
 [[package]]
 name = "nova-verifier"
 version = "0.1.0"
-source = "git+https://github.com/MVPWorkshop/nova-verifier.git#50a6e4e6524b14596b491421f675e1b8c0fb1327"
+source = "git+https://github.com/MVPWorkshop/nova-verifier.git#5729fe91e478419fb7eabde7978ffd094c44e191"
 dependencies = [
  "ff",
  "hex",
@@ -7937,9 +7910,9 @@ checksum = "c08d65885ee38876c4f86fa503fb49d7b507c2b62552df7c70b2fce627e06381"
 
 [[package]]
 name = "openssl"
-version = "0.10.68"
+version = "0.10.70"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6174bc48f102d208783c2c84bf931bb75927a617866870de8a4ea85597f871f5"
+checksum = "61cfb4e166a8bb8c9b55c500bc2308550148ece889be90f609377e58140f42c6"
 dependencies = [
  "bitflags 2.7.0",
  "cfg-if 1.0.0",
@@ -7978,9 +7951,9 @@ dependencies = [
 
 [[package]]
 name = "openssl-sys"
-version = "0.9.104"
+version = "0.9.105"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "45abf306cbf99debc8195b66b7346498d7b10c210de50418b5ccd7ceba08c741"
+checksum = "8b22d5b84be05a8d6947c7cb71f7c849aa0f112acd4bf51c2a7c1c988ac0a9dc"
 dependencies = [
  "cc",
  "libc",
@@ -8314,6 +8287,23 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
+]
+
+[[package]]
+name = "pallet-claim"
+version = "0.1.0"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "pallet-balances",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
@@ -9081,6 +9071,7 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-std",
+ "ultraplonk-no-std",
 ]
 
 [[package]]
@@ -9382,7 +9373,7 @@ checksum = "4e69bf016dc406eff7d53a7d3f7cf1c2e72c82b9088aac1118591e36dd2cd3e9"
 dependencies = [
  "bitcoin_hashes",
  "rand 0.8.5",
- "rand_core 0.6.4",
+ "rand_core 0.4.2",
  "serde",
  "unicode-normalization",
 ]
@@ -13570,7 +13561,7 @@ dependencies = [
  "thiserror 1.0.69",
  "tracing",
  "tracing-log",
- "tracing-subscriber",
+ "tracing-subscriber 0.3.19",
 ]
 
 [[package]]
@@ -15150,7 +15141,7 @@ dependencies = [
  "parity-scale-codec",
  "tracing",
  "tracing-core",
- "tracing-subscriber",
+ "tracing-subscriber 0.3.19",
 ]
 
 [[package]]
@@ -16074,6 +16065,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "test-utils"
+version = "0.4.0"
+source = "git+https://github.com/zkVerify/accelerated-bn-cryptography.git?tag=v0.4.0#c764589d32d2460c41fb0fbee4c2012d1914e1f7"
+dependencies = [
+ "ark-ec",
+ "ark-scale",
+ "ark-std 0.4.0",
+]
+
+[[package]]
 name = "thiserror"
 version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -16548,6 +16549,15 @@ dependencies = [
 
 [[package]]
 name = "tracing-subscriber"
+version = "0.2.25"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0e0d2eaa99c3c2e41547cfa109e910a68ea03823cccad4a0525dcbc9b01e8c71"
+dependencies = [
+ "tracing-core",
+]
+
+[[package]]
+name = "tracing-subscriber"
 version = "0.3.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e8189decb5ac0fa7bc8b96b7cb9b2701d60d48805aca84a238004d665fcc4008"
@@ -16697,9 +16707,9 @@ version = "1.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675"
 dependencies = [
- "cfg-if 1.0.0",
+ "cfg-if 0.1.10",
  "digest 0.10.7",
- "rand 0.8.5",
+ "rand 0.4.6",
  "static_assertions",
 ]
 
@@ -16725,6 +16735,23 @@ dependencies = [
  "crunchy",
  "hex",
  "static_assertions",
+]
+
+[[package]]
+name = "ultraplonk-no-std"
+version = "0.2.1"
+source = "git+https://github.com/zkVerify/ultraplonk_verifier.git?tag=v0.2.1#3d6a30b90d8dd5b751465cfb524b339a7a16cb49"
+dependencies = [
+ "ark-bn254",
+ "ark-bn254-ext",
+ "ark-ec",
+ "ark-ff 0.4.2",
+ "ark-models-ext",
+ "ark-std 0.4.0",
+ "hex-literal",
+ "sha3 0.10.8",
+ "snafu 0.8.5",
+ "test-utils",
 ]
 
 [[package]]
@@ -18091,7 +18118,7 @@ dependencies = [
 
 [[package]]
 name = "zkv-runtime"
-version = "0.9.0"
+version = "0.10.0"
 dependencies = [
  "aggregate-rpc-runtime-api",
  "anyhow",
@@ -18118,6 +18145,7 @@ dependencies = [
  "pallet-balances",
  "pallet-bounties",
  "pallet-child-bounties",
+ "pallet-claim",
  "pallet-conviction-voting",
  "pallet-election-provider-support-benchmarking",
  "pallet-fflonk-verifier",
@@ -18197,7 +18225,7 @@ dependencies = [
  "aggregate-rpc",
  "assert_matches",
  "async-trait",
- "env_logger 0.9.3",
+ "env_logger",
  "frame-benchmarking",
  "frame-benchmarking-cli",
  "frame-metadata-hash-extension",
