@@ -7647,7 +7647,7 @@ checksum = "43794a0ace135be66a25d3ae77d41b91615fb68ae937f904090203e81f755b65"
 [[package]]
 name = "no_std_nova_snark"
 version = "0.38.0"
-source = "git+https://github.com/MVPWorkshop/Nova?branch=public_fields#20a040751aff36a90fb76fbde6b389fa279fb6f1"
+source = "git+https://github.com/MVPWorkshop/Nova?branch=no_std#947762c7a777532dea461b6e6b27867572e04e16"
 dependencies = [
  "bincode 2.0.0-rc.3",
  "bitvec",
@@ -7733,7 +7733,7 @@ checksum = "61807f77802ff30975e01f4f071c8ba10c022052f98b3294119f3e615d13e5be"
 [[package]]
 name = "nova-verifier"
 version = "0.1.0"
-source = "git+https://github.com/MVPWorkshop/nova-verifier.git#50a6e4e6524b14596b491421f675e1b8c0fb1327"
+source = "git+https://github.com/MVPWorkshop/nova-verifier.git#5729fe91e478419fb7eabde7978ffd094c44e191"
 dependencies = [
  "ff",
  "hex",
