@@ -22,16 +22,9 @@ pub trait Config: 'static {
     }
 }
 
-// TODO -> Check if this is MAX
-pub const VK_MAX_LEN: usize = 10_302_515;
-// pub const VK_MAX_LEN: usize = 10;
-
-// TODO -> Maybe send VerificationKey as a struct, and not bytes?
 pub type Vk = VerifyingKey;
-// pub type Vk = Vec<u8>;
 pub type Proof = Vec<u8>;
 
-// TODO -> Additional info
 pub type Pubs = Vec<u8>;
 
 #[derive(Clone, Debug, Encode, Decode, TypeInfo, PartialEq)]
@@ -45,8 +38,7 @@ impl From<Vec<u8>> for Vk {
 
 impl MaxEncodedLen for Vk {
     fn max_encoded_len() -> usize {
-        // ! TODO -> Should fix  this !
-        50
+        555_555
     }
 }
 
@@ -72,7 +64,6 @@ impl<T: Config> Verifier for Nova<T> {
         nova_verifier::verifier::verify_nova(&vk.0, proof, pubs)
             .map_err(|_| log::debug!("Cannot verify Nova proof"))
             .map_err(|_| hp_verifiers::VerifyError::VerifyError)
-        // Ok(())
     }
 
     fn pubs_bytes(pubs: &Self::Pubs) -> hp_verifiers::Cow<[u8]> {

@@ -21,8 +21,6 @@ fn init<T: pallet_aggregate::Config>() -> (T::AccountId, u32) {
     (caller, domain_id)
 }
 
-// include!("resources.rs");
-
 #[benchmarks(where T: pallet_verifiers::Config<Nova<T>>+ pallet_aggregate::Config)]
 mod benchmarks {
 
@@ -34,12 +32,8 @@ mod benchmarks {
         let (caller, domain_id) = init::<T>();
 
         let vk: crate::Vk = include_bytes!("resources/bin/vk.bin").to_vec().into();
-        // let vk = VALID_VK;
         let proof = include_bytes!("resources/bin/compressed_snark.bin").to_vec();
         let pubs = include_bytes!("resources/bin/pubs.bin").to_vec();
-
-        // let proof = VALID_PROOF;
-        // let pubs = VALID_PUBS;
 
         #[extrinsic_call]
         submit_proof(
@@ -57,9 +51,6 @@ mod benchmarks {
         let (caller, domain_id) = init::<T>();
 
         let vk_hash = sp_core::H256::repeat_byte(2);
-        // let proof = VALID_PROOF;
-        // let pubs = VALID_PUBS;
-        // let vk = VALID_VK;
         let vk: crate::Vk = include_bytes!("resources/bin/vk.bin").to_vec().into();
         let proof = include_bytes!("resources/bin/compressed_snark.bin").to_vec();
         let pubs = include_bytes!("resources/bin/pubs.bin").to_vec();
@@ -80,10 +71,8 @@ mod benchmarks {
     #[benchmark]
     fn register_vk() {
         // setup code
-        // let (caller, _domain_id) = init::<T>();
         let caller: T::AccountId = funded_account::<T>();
         let vk: crate::Vk = include_bytes!("resources/bin/vk.bin").to_vec().into();
-        // let vk = VALID_VK;
 
         #[extrinsic_call]
         register_vk(RawOrigin::Signed(caller), vk.clone().into());
@@ -97,7 +86,6 @@ mod benchmarks {
         // setup code
         let caller: T::AccountId = funded_account::<T>();
         let hash = sp_core::H256::repeat_byte(2);
-        // let vk = VALID_VK;
         let vk: crate::Vk = include_bytes!("resources/bin/vk.bin").to_vec().into();
         let vk_entry = VkEntry::new(vk);
         let footprint = Footprint::from_encodable(&vk_entry);
@@ -226,15 +214,4 @@ mod mock {
         ext.execute_with(|| System::set_block_number(1));
         ext
     }
-
-    // /// Build genesis storage according to the mock runtime.
-    // pub fn test_ext() -> sp_io::TestExternalities {
-    //     let mut ext = sp_io::TestExternalities::from(
-    //         frame_system::GenesisConfig::<Test>::default()
-    //             .build_storage()
-    //             .unwrap(),
-    //     );
-    //     ext.execute_with(|| System::set_block_number(1));
-    //     ext
-    // }
 }
