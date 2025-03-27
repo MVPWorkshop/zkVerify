@@ -41,7 +41,7 @@ members = [
     "paratest/node",
     "paratest/pallets/template",
     "patches/cumulus/client/relay-chain-inprocess-interface",
-    "patches/cumulus/client/relay-chain-minimal-node", 
+    "patches/cumulus/client/relay-chain-minimal-node",
     "verifiers/nova",
 ]
 
@@ -105,8 +105,9 @@ pallet-groth16-verifier = { path = "verifiers/groth16", default-features = false
 pallet-risc0-verifier = { path = "verifiers/risc0", default-features = false }
 pallet-ultraplonk-verifier = { path = "verifiers/ultraplonk", default-features = false }
 pallet-proofofsql-verifier = { path = "verifiers/proofofsql", default-features = false }
-risc0-verifier = { git = "https://github.com/HorizenLabs/risc0-verifier.git", tag="v0.5.0", default-features = false }
+risc0-verifier = { git = "https://github.com/HorizenLabs/risc0-verifier.git", tag = "v0.5.0", default-features = false }
 pallet-plonky2-verifier = { path = "verifiers/plonky2", default-features = false }
+pallet-nova-verifier = { path = "verifiers/nova", default-features = false }
 
 zkv-benchmarks = { path = "relay-node/benchmarks" }
 native-cache = { path = "utils/native-cache" }
@@ -344,9 +345,9 @@ panic = "unwind"
 opt-level = 3
 
 [workspace.lints.clippy]
-unnecessary_cast = { level = "allow", priority = 2 }                 # Types may change
-useless_conversion = { level = "allow", priority = 2 }               # Types may change
-zero-prefixed-literal = { level = "allow", priority = 2 }            # 00_1000_000
+unnecessary_cast = { level = "allow", priority = 2 }      # Types may change
+useless_conversion = { level = "allow", priority = 2 }    # Types may change
+zero-prefixed-literal = { level = "allow", priority = 2 } # 00_1000_000
 
 # make sure dev builds with backtrace do
 # not slow us down
