@@ -28,9 +28,9 @@ mod benchmarks {
 
     fn get_valid_test_data() -> TestData {
         TestData {
-            vk: include_bytes!("resources/bin/vk.bin").to_vec().into(),
-            proof: include_bytes!("resources/bin/compressed_snark.bin").to_vec(),
-            pubs: include_bytes!("resources/bin/pubs.bin").to_vec(),
+            vk: VALID_VK.to_vec().into(),
+            proof: VALID_PROOF.to_vec(),
+            pubs: VALID_PUBS.to_vec(),
         }
     }
 
