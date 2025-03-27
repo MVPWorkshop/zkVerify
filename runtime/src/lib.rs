@@ -989,6 +989,24 @@ impl pallet_verifiers::Config<pallet_proofofsql_verifier::ProofOfSql<Runtime>> f
 }
 
 parameter_types! {
+    pub const NovaSomeParameter: u8 = 1; // arbitrary value
+}
+
+impl pallet_nova_verifier::Config for Runtime {
+    type SomeParameter = NovaSomeParameter;
+}
+
+impl pallet_verifiers::Config<pallet_nova_verifier::Nova<Runtime>> for Runtime {
+    type RuntimeEvent = RuntimeEvent;
+    type OnProofVerified = Aggregate;
+    type WeightInfo =
+        pallet_nova_verifier::NovaWeight<weights::pallet_nova_verifier::ZKVWeight<Runtime>>;
+    type Ticket = VkRegistrationHoldConsideration;
+    #[cfg(feature = "runtime-benchmarks")]
+    type Currency = Balances;
+}
+
+parameter_types! {
     pub const Coprocessor: Option<StateMachine> = Some(StateMachine::Kusama(4009));
     pub const HostStateMachine: StateMachine = StateMachine::Substrate(*b"zkv_");
 }
@@ -1192,6 +1210,7 @@ construct_runtime!(
         SettlementUltraplonkPallet: pallet_ultraplonk_verifier = 163,
         SettlementProofOfSqlPallet: pallet_proofofsql_verifier = 164,
         SettlementPlonky2Pallet: pallet_plonky2_verifier = 165,
+        SettlementNovaPallet: pallet_nova_verifier = 166,
     }
 );
 
@@ -1278,6 +1297,7 @@ mod benches {
         [pallet_ultraplonk_verifier, UltraplonkVerifierBench::<Runtime>]
         [pallet_proofofsql_verifier, ProofOfSqlVerifierBench::<Runtime>]
         [pallet_plonky2_verifier, Plonky2VerifierBench::<Runtime>]
+        [pallet_nova_verifier, NovaVerifierBench::<Runtime>]
         // parachains
         [crate::parachains::configuration, Configuration]
         [crate::parachains::disputes, ParasDisputes]
@@ -1769,6 +1789,7 @@ impl_runtime_apis! {
             use pallet_ultraplonk_verifier::benchmarking::Pallet as UltraplonkVerifierBench;
             use pallet_proofofsql_verifier::benchmarking::Pallet as ProofOfSqlVerifierBench;
             use pallet_plonky2_verifier::benchmarking::Pallet as Plonky2VerifierBench;
+            use pallet_nova_verifier::benchmarking::Pallet as NovaVerifierBench;
 
             pub mod xcm {
                 pub use pallet_xcm::benchmarking::Pallet as XcmPalletBench;
@@ -1800,6 +1821,7 @@ impl_runtime_apis! {
             use pallet_ultraplonk_verifier::benchmarking::Pallet as UltraplonkVerifierBench;
             use pallet_proofofsql_verifier::benchmarking::Pallet as ProofOfSqlVerifierBench;
             use pallet_plonky2_verifier::benchmarking::Pallet as Plonky2VerifierBench;
+            use pallet_nova_verifier::benchmarking::Pallet as NovaVerifierBench;
 
             pub mod xcm {
                 use super::*;

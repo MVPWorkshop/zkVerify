@@ -21535,6 +21535,7 @@ dependencies = [
  "pallet-ismp-runtime-api",
  "pallet-message-queue",
  "pallet-multisig",
+ "pallet-nova-verifier",
  "pallet-offences",
  "pallet-plonky2-verifier",
  "pallet-preimage",
