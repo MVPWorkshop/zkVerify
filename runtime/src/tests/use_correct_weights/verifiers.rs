@@ -103,3 +103,18 @@ fn pallet_settlement_plonky2() {
         crate::weights::pallet_plonky2_verifier::ZKVWeight::<Runtime>::verify_proof()
     );
 }
+
+#[test]
+fn pallet_settlement_nova() {
+    use pallet_nova_verifier::{Nova, WeightInfo};
+
+    assert_eq!(
+        <<Runtime as pallet_verifiers::Config<Nova<Runtime>>>::WeightInfo as
+        pallet_verifiers::WeightInfo<Nova<Runtime>>>
+        ::verify_proof(
+            &Vec::new(),
+            &Vec::new()
+        ),
+        crate::weights::pallet_nova_verifier::ZKVWeight::<Runtime>::verify_proof()
+    );
+}

@@ -9,7 +9,7 @@ use core::marker::PhantomData;
 /// Weights for `pallet_nova_verifier` using the zkVerify node and recommended hardware.
 pub struct ZKVWeight<T>(PhantomData<T>);
 
-impl<T: frame_system::Config> pallet_plonky2_verifier::WeightInfo for ZKVWeight<T> {
+impl<T: frame_system::Config> pallet_nova_verifier::WeightInfo for ZKVWeight<T> {
     fn verify_proof() -> Weight {
         Weight::from_parts(10_000_000, 1000)
     }
